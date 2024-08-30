@@ -12,6 +12,15 @@ RUN apt-get update && \
 # Install requirements for devtools
 # RUN apt-get install build-essential libcurl4-gnutls-dev libxml2-dev libssl-dev -y
 
-#RUN Rscript \
-RUN Rscript -e 'install.packages("remotes")'
-RUN Rscript -e 'remotes::install_github("JCVenterInstitute/FRmatch")'
+# Work in root
+WORKDIR /root
+
+# Libcurl required by BiocManager
+RUN apt-get install libcurl4-openssl-dev -y
+
+RUN Rscript \
+    -e 'install.packages("remotes")' \
+    -e 'install.packages("BiocManager", repos="https://cran.rstudio.com", ask=FALSE)' \
+    -e "BiocManager::install(version='3.19', update=TRUE, ask=FALSE)" \
+    -e 'BiocManager::install("SingleCellExperiment", ask=FALSE)' \
+    -e 'remotes::install_github("JCVenterInstitute/FRmatch")'
