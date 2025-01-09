@@ -35,7 +35,7 @@ sce.MTG <- make_data_object(dat = cell_by_gene_expression,
 rst.layer1toMTG <- FRmatch(sce.query = sce.layer1, sce.ref = sce.MTG, subsamp.size = 10)
 
 ## Read expected results
-expected_results <- readRDS("/root/tests/test_data/expected_results")
+expected_results <- readRDS("tests/test_data/expected_results")
 
 test_that(desc = "FRMatch outputs expected results", code = {
   ## Test that the result is the correct value
